@@ -19,6 +19,12 @@ class BaseRepository
     return @elements
   end
 
+  def find(id)
+    @elements.find { |element| element.id == id}
+  end
+
+  private
+
   def write_csv
     CSV.open(@csv_file, "w") do |csv|
       # require "pry-byebug"
@@ -29,8 +35,6 @@ class BaseRepository
       end
     end
   end
-
-  private
 
   def load_csv
     csv_options = { headers: :first_row, header_converters: :symbol }

@@ -7,6 +7,12 @@ class EmployeesRepository < BaseRepository
     @elements.find { |employee| employee.username == username }
   end
 
+  def all_delivery_guys
+    @elements.select { |employee| employee.delivery_guy? }
+  end
+
+  # undef_method :all
+
   private
 
   def build_element(row)

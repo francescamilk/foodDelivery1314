@@ -14,6 +14,6 @@ class Customer
   end
 
   def self.headers
-    %w(id name price)
+    %w(id name address)
   end
 end
