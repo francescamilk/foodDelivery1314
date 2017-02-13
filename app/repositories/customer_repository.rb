@@ -1,7 +1,7 @@
 require_relative "base_repository"
 require_relative "../models/customer"
 
-class CustomersRepository < BaseRepository
+class CustomerRepository < BaseRepository
 
   private
 
