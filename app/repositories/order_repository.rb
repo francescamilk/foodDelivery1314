@@ -1,10 +1,10 @@
 require_relative "base_repository"
 
-class OrdersRepository < BaseRepository
-  def initialize(csv_file, meals_repository, customers_repository, employees_repository)
-    @meals_repository = meals_repository
-    @customers_repository = customers_repository
-    @employees_repository = employees_repository
+class OrderRepository < BaseRepository
+  def initialize(csv_file, meal_repository, customer_repository, employee_repository)
+    @meal_repository = meal_repository
+    @customer_repository = customer_repository
+    @employee_repository = employee_repository
 
     super(csv_file)
   end
@@ -25,9 +25,9 @@ class OrdersRepository < BaseRepository
 
   # called in load_csv
   def build_element(row)
-    meal = @meals_repository.find(row[:meal_id].to_i)
-    customer = @customers_repository.find(row[:customer_id].to_i)
-    employee = @employees_repository.find(row[:employee_id].to_i)
+    meal = @meal_repository.find(row[:meal_id].to_i)
+    customer = @customer_repository.find(row[:customer_id].to_i)
+    employee = @employee_repository.find(row[:employee_id].to_i)
 
     Order.new({
       id: row[:id].to_i,

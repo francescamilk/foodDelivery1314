@@ -1,7 +1,7 @@
 require_relative "base_repository"
 require_relative "../models/meal"
 
-class MealsRepository < BaseRepository
+class MealRepository < BaseRepository
 
   private
 

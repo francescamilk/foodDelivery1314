@@ -1,7 +1,7 @@
 require_relative "../models/employee"
 require_relative "base_repository"
 
-class EmployeesRepository < BaseRepository
+class EmployeeRepository < BaseRepository
 
   def find_by_username(username)
     @elements.find { |employee| employee.username == username }
