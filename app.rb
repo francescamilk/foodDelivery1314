@@ -25,15 +25,8 @@ meal_repository = MealRepository.new(meals_csv)
 meals_controller = MealsController.new(meal_repository)
 
 orders_csv = 'data/orders.csv'
-order_repository = OrderRepository.new(
-  orders_csv, meal_repository, customer_repository, employee_repository
-)
-orders_controller = OrdersController.new(
-  customer_repository, meal_repository, employee_repository, order_repository
-)
+order_repository = OrderRepository.new(orders_csv, meal_repository, customer_repository, employee_repository)
+orders_controller = OrdersController.new(meal_repository, employee_repository, customer_repository, order_repository)
 
-router = Router.new(
-  meals_controller, customers_controller, sessions_controller, orders_controller
-)
-
+router = Router.new(meals_controller, customers_controller, sessions_controller, orders_controller)
 router.run

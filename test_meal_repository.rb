@@ -4,3 +4,4 @@ csv_file = 'data/meals.csv'
 repo = MealRepository.new(csv_file)
 
 repo.add(Meal.new(name: 'Regina', price: 10))
+p repo

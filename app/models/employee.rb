@@ -3,7 +3,7 @@ class Employee
   attr_accessor :id
 
   def initialize(attributes = {})
-    # id,username,password,role
+    # id, username, password, role
     @id = attributes[:id]
     @username = attributes[:username]
     @password = attributes[:password]

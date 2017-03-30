@@ -7,13 +7,13 @@ class CustomersController
   end
 
   def add
-    # 1. ask for the name
+    # 1. Ask for the name
     name = @view.ask_for(:name)
-    # 2. ask for the address
+    # 2. Ask for the address
     address = @view.ask_for(:address)
     # 3. Create the customer
     new_customer = Customer.new(name: name, address: address)
-    # 4. store in the repo
+    # 4. Store in the repo
     @customer_repository.add(new_customer)
   end
 

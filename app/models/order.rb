@@ -3,7 +3,7 @@ class Order
   attr_accessor :id
 
   def initialize(attributes = {})
-    # id,delivered(boolean),meal,customer,employee
+    # id, delivered(boolean), meal, customer, employee
     @id = attributes[:id]
     @delivered = attributes[:delivered] || false
     @meal = attributes[:meal]

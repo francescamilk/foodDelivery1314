@@ -2,10 +2,10 @@ require_relative '../views/orders_view'
 require_relative '../models/order'
 
 class OrdersController
-  def initialize(customer_repository, meal_repository, employee_repository, order_repository)
-    @customer_repository = customer_repository
+  def initialize(meal_repository, employee_repository, customer_repository, order_repository)
     @meal_repository = meal_repository
     @employee_repository = employee_repository
+    @customer_repository = customer_repository
     @order_repository = order_repository
     @view = OrdersView.new
   end
@@ -19,7 +19,7 @@ class OrdersController
     order = @order_repository.find(order_id)
     # 4. Mark the order as delivered
     order.deliver!
-    # 5. SAVE TO CSV
+    # 5. Save to csv
     @order_repository.save
   end
 

@@ -27,8 +27,6 @@ class BaseRepository
 
   def write_csv
     CSV.open(@csv_file, 'w') do |csv|
-      # require "pry-byebug"
-      # binding.pry
       csv << @elements.first.class.headers
       @elements.each do |element|
         csv << element.to_csv_row
