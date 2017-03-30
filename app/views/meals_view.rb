@@ -1,9 +1,9 @@
-require_relative "base_view"
+require_relative 'base_view'
 
 class MealsView < BaseView
   def ask_for_price
-    puts "price?"
-    print "> "
+    puts 'price?'
+    print '> '
     gets.chomp.to_i
   end
 

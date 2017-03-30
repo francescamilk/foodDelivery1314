@@ -1,4 +1,4 @@
-require_relative "base_repository"
+require_relative 'base_repository'
 
 class OrderRepository < BaseRepository
   def initialize(csv_file, meal_repository, customer_repository, employee_repository)

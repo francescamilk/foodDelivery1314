@@ -12,7 +12,7 @@ class Order
   end
 
   def delivered?
-    return @delivered
+    @delivered
   end
 
   def deliver!

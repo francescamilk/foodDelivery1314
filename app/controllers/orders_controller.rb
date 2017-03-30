@@ -1,5 +1,5 @@
-require_relative "../views/orders_view"
-require_relative "../models/order"
+require_relative '../views/orders_view'
+require_relative '../models/order'
 
 class OrdersController
   def initialize(customer_repository, meal_repository, employee_repository, order_repository)

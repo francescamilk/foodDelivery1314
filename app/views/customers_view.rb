@@ -1,4 +1,4 @@
-require_relative "base_view"
+require_relative 'base_view'
 
 class CustomersView < BaseView
   def display(customers)

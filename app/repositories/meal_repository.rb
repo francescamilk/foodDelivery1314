@@ -1,8 +1,7 @@
-require_relative "base_repository"
-require_relative "../models/meal"
+require_relative 'base_repository'
+require_relative '../models/meal'
 
 class MealRepository < BaseRepository
-
   private
 
   def build_element(row)

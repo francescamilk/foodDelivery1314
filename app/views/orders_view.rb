@@ -1,9 +1,9 @@
-require_relative "base_view"
+require_relative 'base_view'
 
 class OrdersView < BaseView
   def ask_for_id(label)
     puts "#{label} id?"
-    print "> "
+    print '> '
     gets.chomp.to_i
   end
 

@@ -1,11 +1,11 @@
-require "csv"
+require 'csv'
 
 class BaseRepository
   def initialize(csv_file)
     @csv_file = csv_file
     @elements = [] # Array of Customer instances
     @next_id = 1
-    load_csv if File.exists?(@csv_file)
+    load_csv if File.exist?(@csv_file)
   end
 
   def add(element)
@@ -16,17 +16,17 @@ class BaseRepository
   end
 
   def all
-    return @elements
+    @elements
   end
 
   def find(id)
-    @elements.find { |element| element.id == id}
+    @elements.find { |element| element.id == id }
   end
 
   private
 
   def write_csv
-    CSV.open(@csv_file, "w") do |csv|
+    CSV.open(@csv_file, 'w') do |csv|
       # require "pry-byebug"
       # binding.pry
       csv << @elements.first.class.headers

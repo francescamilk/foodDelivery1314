@@ -1,4 +1,4 @@
-require_relative "../views/sessions_view"
+require_relative '../views/sessions_view'
 
 class SessionsController
   def initialize(employee_repository)
@@ -13,7 +13,7 @@ class SessionsController
     password = @view.ask_for(:password)
     # 3. Find the employee with the username
     employee = @employee_repository.find_by_username(username)
-
+    # 4. Compare the password given with the one in DB.
     if employee && employee.password == password
       @view.signed_in_successfully(employee)
       return employee
@@ -21,7 +21,5 @@ class SessionsController
       @view.wrong_credentials
       sign_in # Recursive call
     end
-
-    # 4. Compare the password given with the one in DB.
   end
 end
