@@ -2,13 +2,9 @@ require_relative "../views/customers_view"
 require_relative "../models/customer"
 
 class CustomersController
-  def initialize(customer_repo)
-    @customer_repo = customer_repo
+  def initialize(customer_repository)
+    @customer_repo = customer_repository
     @customers_view = CustomersView.new
-  end
-
-  def list
-    display_customers
   end
 
   def add
@@ -16,6 +12,10 @@ class CustomersController
     address = @customers_view.ask_user_for(:address)
     customer = Customer.new(name: name, address: address)
     @customer_repo.add(customer)
+    display_customers
+  end
+
+  def list
     display_customers
   end
 

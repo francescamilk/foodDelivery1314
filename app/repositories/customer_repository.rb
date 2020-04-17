@@ -1,5 +1,5 @@
-require_relative "../models/customer"
 require "csv"
+require_relative "../models/customer"
 
 class CustomerRepository
   def initialize(csv_file)

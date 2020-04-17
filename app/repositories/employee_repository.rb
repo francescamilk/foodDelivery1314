@@ -23,7 +23,8 @@ class EmployeeRepository
   private
 
   def load_csv
-    CSV.foreach(@csv_file, headers: :first_row, header_converters: :symbol) do |row|
+    csv_options = { headers: :first_row, header_converters: :symbol }
+    CSV.foreach(@csv_file, csv_options) do |row|
       row[:id] = row[:id].to_i
       @employees << Employee.new(row)
     end

@@ -32,15 +32,8 @@ describe "CustomersController", :customer do
     expect(controller).to be_a(CustomersController)
   end
 
-  describe "#list" do
-    it "should grab customers from the repo and display them" do
-      controller = CustomersController.new(repository)
-      customers.drop(1).each do |customer_array|
-        expect(STDOUT).to receive(:puts).with(/#{customer_array[1]}/)
-      end
-
-      controller.list
-    end
+  before(:each) do
+    CsvHelper.write_csv(csv_path, customers)
   end
 
   describe "#add" do
@@ -53,6 +46,17 @@ describe "CustomersController", :customer do
       expect(repository.all.length).to eq(4)
       expect(repository.all[3].name).to eq("Le Wagon")
       expect(repository.all[3].address).to eq("Le Wagon")
+    end
+  end
+
+  describe "#list" do
+    it "should grab customers from the repo and display them" do
+      controller = CustomersController.new(repository)
+      customers.drop(1).each do |customer_array|
+        expect(STDOUT).to receive(:puts).with(/#{customer_array[1]}/)
+      end
+
+      controller.list
     end
   end
 end

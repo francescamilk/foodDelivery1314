@@ -11,7 +11,7 @@ class Employee
   end
 
   def undelivered_orders
-    @orders.reject(&:delivered?)
+    @orders.reject { |order| order.delivered? }
   end
 
   def add_order(order)
