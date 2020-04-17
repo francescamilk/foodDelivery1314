@@ -3,7 +3,7 @@ require_relative "../models/meal"
 
 class MealsController
   def initialize(meal_repository)
-    @meal_repo = meal_repository
+    @meal_repository = meal_repository
     @meals_view = MealsView.new
   end
 
@@ -11,7 +11,7 @@ class MealsController
     name = @meals_view.ask_user_for(:name)
     price = @meals_view.ask_user_for(:price).to_i
     meal = Meal.new(name: name, price: price)
-    @meal_repo.add(meal)
+    @meal_repository.add(meal)
     display_meals
   end
 
@@ -22,7 +22,7 @@ class MealsController
   private
 
   def display_meals
-    meals = @meal_repo.all
+    meals = @meal_repository.all
     @meals_view.display(meals)
   end
 end
