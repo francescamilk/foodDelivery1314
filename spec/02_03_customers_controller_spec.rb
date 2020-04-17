@@ -27,13 +27,13 @@ describe "CustomersController", :customer do
   let(:csv_path) { "spec/support/customers.csv" }
   let(:repository) { CustomerRepository.new(csv_path) }
 
+  before(:each) do
+    CsvHelper.write_csv(csv_path, customers)
+  end
+
   it "should be initialized with a `CustomerRepository` instance" do
     controller = CustomersController.new(repository)
     expect(controller).to be_a(CustomersController)
-  end
-
-  before(:each) do
-    CsvHelper.write_csv(csv_path, customers)
   end
 
   describe "#add" do
