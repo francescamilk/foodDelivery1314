@@ -1,66 +1,70 @@
-require_relative '../views/orders_view'
-require_relative '../models/order'
+require_relative "../views/meals_view"
+require_relative "../views/customers_view"
+require_relative "../views/sessions_view"
+require_relative "../views/orders_view"
 
 class OrdersController
-  def initialize(meal_repository, employee_repository, customer_repository, order_repository)
-    @meal_repository = meal_repository
-    @employee_repository = employee_repository
-    @customer_repository = customer_repository
-    @order_repository = order_repository
-    @view = OrdersView.new
-  end
-
-  def mark_as_delivered(employee)
-    # 1. Display all my undelivered orders
-    list_my_orders(employee)
-    # 2. Ask for an order id
-    order_id = @view.ask_for_id(:order)
-    # 3. Fetch the order from the order repo
-    order = @order_repository.find(order_id)
-    # 4. Mark the order as delivered
-    order.deliver!
-    # 5. Save to csv
-    @order_repository.save
-  end
-
-  def list_my_orders(employee)
-    orders = @order_repository.my_undelivered_orders(employee)
-    @view.print_orders(orders)
-  end
-
-  def list_undelivered_orders
-    # 1. Fetch the undelivered orders from order repo
-    orders = @order_repository.all_undelivered_orders
-    # 2. Display them
-    @view.print_orders(orders)
+  def initialize(meal_repo, customer_repo, employee_repo, order_repo)
+    @meal_repo = meal_repo
+    @customer_repo = customer_repo
+    @employee_repo = employee_repo
+    @order_repo = order_repo
+    @meals_view = MealsView.new
+    @customers_view = CustomersView.new
+    @sessions_view = SessionsView.new
+    @orders_view = OrdersView.new
   end
 
   def add
-    # 1. List all the customers
-    CustomersController.new(@customer_repository).list
-    # 2. Ask user for customer id
-    customer_id = @view.ask_for_id(:customer)
-    # 3. Find the customer in the customer repo
-    customer = @customer_repository.find(customer_id)
+    meal = select_meal
+    customer = select_customer
+    employee = select_employee
+    order = Order.new(meal: meal, customer: customer)
+    employee.add_order(order) # Link employee and order on both sides of the relation
+    @order_repo.add(order)
+  end
 
-    # 4. List all the meals
-    MealsController.new(@meal_repository).list
-    # 5. Ask user for meal id
-    meal_id = @view.ask_for_id(:meal)
-    # 6. Find the meal in the meal repo
-    meal = @meal_repository.find(meal_id)
+  def list_undelivered_orders
+    undelivered_orders = @order_repo.undelivered_orders
+    @orders_view.display(undelivered_orders)
+  end
 
-    # 7. List all delivery guys
-    delivery_guys = @employee_repository.all_delivery_guys
-    @view.print_employees(delivery_guys)
-    # 8. Ask user for employee id to assign the order
-    employee_id = @view.ask_for_id(:employee)
-    # 9. Find the employee in the employee repo
-    employee = @employee_repository.find(employee_id)
+  def list_my_orders(current_user)
+    list_my_undelivered_orders(current_user)
+  end
 
-    # 10. Create the order
-    order = Order.new(customer: customer, meal: meal, employee: employee)
-    # 11. Add the order to the order repo.
-    @order_repository.add(order)
+  def mark_as_delivered(current_user)
+    list_my_undelivered_orders(current_user)
+    index = @orders_view.ask_user_for_index
+    order = current_user.undelivered_orders[index]
+    @order_repo.mark_as_delivered(order)
+  end
+
+  private
+
+  def select_meal
+    meals = @meal_repo.all
+    @meals_view.display(meals)
+    index = @orders_view.ask_user_for_index
+    return meals[index]
+  end
+
+  def select_customer
+    customers = @customer_repo.all
+    @customers_view.display(customers)
+    index = @orders_view.ask_user_for_index
+    return customers[index]
+  end
+
+  def select_employee
+    employees = @employee_repo.all_delivery_guys
+    @sessions_view.display(employees)
+    index = @orders_view.ask_user_for_index
+    return employees[index]
+  end
+
+  def list_my_undelivered_orders(user)
+    orders = user.undelivered_orders
+    @orders_view.display(orders)
   end
 end

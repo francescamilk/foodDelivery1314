@@ -1,9 +1,13 @@
-require_relative 'base_view'
-
-class CustomersView < BaseView
+class CustomersView
   def display(customers)
-    customers.each do |customer|
-      puts "#{customer.id} - #{customer.name}, #{customer.address}"
+    customers.each_with_index do |customer, index|
+      puts "#{index + 1}. #{customer.name} : #{customer.address}"
     end
+  end
+
+  def ask_user_for(stuff)
+    puts "#{stuff.capitalize}?"
+    print "> "
+    return gets.chomp
   end
 end

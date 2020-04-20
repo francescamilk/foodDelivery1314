@@ -1,15 +1,13 @@
-require_relative 'base_view'
-
-class MealsView < BaseView
-  def ask_for_price
-    puts 'price?'
-    print '> '
-    gets.chomp.to_i
+class MealsView
+  def display(meals)
+    meals.each_with_index do |meal, index|
+      puts "#{index + 1}. #{meal.name} : #{meal.price}€"
+    end
   end
 
-  def display(meals)
-    meals.each do |meal|
-      puts "#{meal.id} - #{meal.name}, #{meal.price}€"
-    end
+  def ask_user_for(stuff)
+    puts "#{stuff.capitalize}?"
+    print "> "
+    return gets.chomp
   end
 end

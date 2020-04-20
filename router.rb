@@ -5,21 +5,16 @@ class Router
     @sessions_controller = sessions_controller
     @orders_controller = orders_controller
     @running = true
-    @employee = nil # Optional
   end
 
   def run
     while @running
-      @employee = @sessions_controller.sign_in
-      while @employee
-        if @employee.manager?
-          print_manager_menu
-          action = ask_user_for_action
-          route_manager_action(action)
+      @current_user = @sessions_controller.login
+      while @current_user
+        if @current_user.manager?
+          route_manager_action
         else
-          print_delivery_guy_menu
-          action = ask_user_for_action
-          route_delivery_guy_action(action)
+          route_delivery_guy_action
         end
       end
       print `clear`
@@ -28,57 +23,78 @@ class Router
 
   private
 
-  def print_manager_menu
-    puts '1. Add a meal'
-    puts '2. List available meals'
-    puts '3. Add a customer'
-    puts '4. List customers'
-    puts '5. Add an order'
-    puts '6. List undelivered orders'
-    puts '8. Sign out'
-    puts '9. Exit'
+  def route_manager_action
+    print_manager_menu
+    choice = gets.chomp.to_i
+    print `clear`
+    manager_action(choice)
   end
 
-  def route_manager_action(action)
-    case action
+  def route_delivery_guy_action
+    print_delivery_guy_menu
+    choice = gets.chomp.to_i
+    print `clear`
+    delivery_guy_action(choice)
+  end
+
+  def print_manager_menu
+    puts "--------------------"
+    puts "------- MENU -------"
+    puts "--------------------"
+    puts "1. Add new meal"
+    puts "2. List all meals"
+    puts "3. Add new customer"
+    puts "4. List all customers"
+    puts "5. Add new order"
+    puts "6. List all undelivered orders"
+    common_menu
+  end
+
+  def print_delivery_guy_menu
+    puts "--------------------"
+    puts "------- MENU -------"
+    puts "--------------------"
+    puts "1. List my undelivered orders"
+    puts "2. Mark order as delivered"
+    common_menu
+  end
+
+  def common_menu
+    puts "7. Logout"
+    puts "8. Exit"
+    print "> "
+  end
+
+  def manager_action(choice)
+    case choice
     when 1 then @meals_controller.add
     when 2 then @meals_controller.list
     when 3 then @customers_controller.add
     when 4 then @customers_controller.list
     when 5 then @orders_controller.add
     when 6 then @orders_controller.list_undelivered_orders
-    when 8 then @employee = nil
-    when 9
-      @employee = nil
-      @running = false
-    else
-      puts 'Wrong action'
+    when 7 then logout!
+    when 8 then stop!
+    else puts "Try again..."
     end
   end
 
-  def print_delivery_guy_menu
-    puts '1. List my orders'
-    puts '2. Mark an ordered as delivered'
-    puts '8. Sign out'
-    puts '9. Exit'
-  end
-
-  def route_delivery_guy_action(action)
-    case action
-    when 1 then @orders_controller.list_my_orders(@employee)
-    when 2 then @orders_controller.mark_as_delivered(@employee)
-    when 8 then @employee = nil
-    when 9
-      @employee = nil
-      @running = false
-    else
-      puts 'Wrong action'
+  def delivery_guy_action(choice)
+    case choice
+    when 1 then @orders_controller.list_my_orders(@current_user)
+    when 2 then @orders_controller.mark_as_delivered(@current_user)
+    when 7 then logout!
+    when 8 then stop!
+    else puts "Try again..."
     end
   end
 
-  def ask_user_for_action
-    puts 'What do you want to do next?'
-    print '> '
-    gets.chomp.to_i
+  def logout!
+    @current_user = nil
+  end
+
+  def stop!
+    logout!
+    @running = false
   end
 end

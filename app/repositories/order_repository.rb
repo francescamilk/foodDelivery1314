@@ -1,40 +1,56 @@
-require_relative 'base_repository'
+require "csv"
+require_relative "../models/order"
 
-class OrderRepository < BaseRepository
+class OrderRepository
   def initialize(csv_file, meal_repository, customer_repository, employee_repository)
+    @csv_file = csv_file
+    @orders = []
     @meal_repository = meal_repository
     @customer_repository = customer_repository
     @employee_repository = employee_repository
-
-    super(csv_file)
+    @next_id = 1
+    load_csv if File.exist?(@csv_file)
   end
 
-  def all_undelivered_orders
-    @elements.select { |order| !order.delivered? }
+  def add(order)
+    order.id = @next_id
+    @orders << order
+    @next_id += 1
+    save_to_csv
   end
 
-  def my_undelivered_orders(employee)
-    @elements.select { |order| !order.delivered? && order.employee == employee }
+  def undelivered_orders
+    @orders.reject { |order| order.delivered? }
   end
 
-  def save
-    write_csv
+  def mark_as_delivered(order)
+    order.deliver!
+    save_to_csv
   end
 
   private
 
-  # called in load_csv
-  def build_element(row)
-    meal = @meal_repository.find(row[:meal_id].to_i)
-    customer = @customer_repository.find(row[:customer_id].to_i)
-    employee = @employee_repository.find(row[:employee_id].to_i)
+  def load_csv
+    csv_options = { headers: :first_row, header_converters: :symbol }
+    CSV.foreach(@csv_file, csv_options) do |row|
+      row[:id] = row[:id].to_i
+      row[:delivered] = row[:delivered] == "true"
+      row[:meal] = @meal_repository.find(row[:meal_id].to_i)
+      row[:customer] = @customer_repository.find(row[:customer_id].to_i)
+      order = Order.new(row)
+      employee = @employee_repository.find(row[:employee_id].to_i)
+      employee.add_order(order) # Link employee and order on both sides of the relation
+      @orders << order
+    end
+    @next_id = @orders.last.id + 1 unless @orders.empty?
+  end
 
-    Order.new({
-      id: row[:id].to_i,
-      delivered: row[:delivered] == "true",
-      meal: meal,
-      customer: customer,
-      employee: employee
-    })
+  def save_to_csv
+    CSV.open(@csv_file, "wb") do |csv|
+      csv << %w[id meal_id customer_id employee_id delivered]
+      @orders.each do |order|
+        csv << [order.id, order.meal.id, order.customer.id, order.employee.id, order.delivered?]
+      end
+    end
   end
 end

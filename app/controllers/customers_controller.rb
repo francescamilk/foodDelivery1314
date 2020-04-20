@@ -1,24 +1,28 @@
-require_relative '../views/customers_view'
+require_relative "../views/customers_view"
+require_relative "../models/customer"
 
 class CustomersController
   def initialize(customer_repository)
     @customer_repository = customer_repository
-    @view = CustomersView.new
+    @customers_view = CustomersView.new
   end
 
   def add
-    # 1. Ask for the name
-    name = @view.ask_for(:name)
-    # 2. Ask for the address
-    address = @view.ask_for(:address)
-    # 3. Create the customer
-    new_customer = Customer.new(name: name, address: address)
-    # 4. Store in the repo
-    @customer_repository.add(new_customer)
+    name = @customers_view.ask_user_for(:name)
+    address = @customers_view.ask_user_for(:address)
+    customer = Customer.new(name: name, address: address)
+    @customer_repository.add(customer)
+    display_customers
   end
 
   def list
+    display_customers
+  end
+
+  private
+
+  def display_customers
     customers = @customer_repository.all
-    @view.display(customers)
+    @customers_view.display(customers)
   end
 end

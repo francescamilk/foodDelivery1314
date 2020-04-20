@@ -1,21 +1,13 @@
-require_relative 'base_view'
-
-class OrdersView < BaseView
-  def ask_for_id(label)
-    puts "#{label} id?"
-    print '> '
-    gets.chomp.to_i
-  end
-
-  def print_employees(employees)
-    employees.each do |employee|
-      puts "#{employee.id}. #{employee.username}"
+class OrdersView
+  def display(orders)
+    orders.each_with_index do |order, index|
+      puts "#{index + 1}. #{order.employee.username} must deliver #{order.meal.name} to #{order.customer.name}"
     end
   end
 
-  def print_orders(orders)
-    orders.each do |order|
-      puts "#{order.id}. #{order.meal.name} for #{order.customer.name}, delivered by #{order.employee.username.capitalize}"
-    end
+  def ask_user_for_index
+    puts "Index?"
+    print "> "
+    gets.chomp.to_i - 1
   end
 end

@@ -1,15 +1,17 @@
-require_relative 'base_view'
-
-class SessionsView < BaseView
-  def wrong_credentials
-    puts 'Wrong credentials... Try again!'
+class SessionsView
+  def ask_for(stuff)
+    puts "#{stuff}?"
+    print "> "
+    return gets.chomp
   end
 
-  def signed_in_successfully(employee)
-    if employee.manager?
-      puts "[MANAGER] Welcome #{employee.username}!"
-    else
-      puts "[DELIVERY GUY] Welcome #{employee.username}!"
+  def print_wrong_credentials
+    puts "Wrong credentials... Try again"
+  end
+
+  def display(employees)
+    employees.each_with_index do |employee, index|
+      puts "#{index + 1}. #{employee.username}"
     end
   end
 end
