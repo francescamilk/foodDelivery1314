@@ -7,16 +7,6 @@ class Employee
     @username = attributes[:username]
     @password = attributes[:password]
     @role = attributes[:role]
-    @orders = []
-  end
-
-  def undelivered_orders
-    @orders.reject { |order| order.delivered? }
-  end
-
-  def add_order(order)
-    order.employee = self
-    @orders << order
   end
 
   def manager?

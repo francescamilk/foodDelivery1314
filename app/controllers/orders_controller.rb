@@ -19,8 +19,7 @@ class OrdersController
     meal = select_meal
     customer = select_customer
     employee = select_employee
-    order = Order.new(meal: meal, customer: customer)
-    employee.add_order(order) # Link employee and order on both sides of the relation
+    order = Order.new(meal: meal, customer: customer, employee: employee)
     @order_repo.add(order)
   end
 
@@ -36,7 +35,8 @@ class OrdersController
   def mark_as_delivered(current_user)
     list_my_undelivered_orders(current_user)
     index = @orders_view.ask_user_for_index
-    order = current_user.undelivered_orders[index]
+    my_orders = @order_repo.my_undelivered_orders(current_user)
+    order = my_orders[index]
     @order_repo.mark_as_delivered(order)
   end
 
@@ -64,7 +64,7 @@ class OrdersController
   end
 
   def list_my_undelivered_orders(user)
-    orders = user.undelivered_orders
+    orders = @order_repo.my_undelivered_orders(user)
     @orders_view.display(orders)
   end
 end
