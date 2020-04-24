@@ -11,7 +11,7 @@ class CustomersController
     name = @customers_view.ask_user_for(:name)
     address = @customers_view.ask_user_for(:address)
     customer = Customer.new(name: name, address: address)
-    @customer_repository.add(customer)
+    @customer_repository.create(customer)
     display_customers
   end
 

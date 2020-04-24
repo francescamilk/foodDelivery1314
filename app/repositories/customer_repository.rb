@@ -9,15 +9,15 @@ class CustomerRepository
     load_csv if File.exist?(@csv_file)
   end
 
-  def all
-    @customers
-  end
-
-  def add(customer)
+  def create(customer)
     customer.id = @next_id
     @customers << customer
     @next_id += 1
     save_csv
+  end
+
+  def all
+    @customers
   end
 
   def find(id)

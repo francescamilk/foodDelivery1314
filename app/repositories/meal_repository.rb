@@ -9,15 +9,15 @@ class MealRepository
     load_csv if File.exist?(@csv_file)
   end
 
-  def all
-    @meals
-  end
-
   def create(meal)
     meal.id = @next_id
     @meals << meal
     @next_id += 1
     save_csv
+  end
+
+  def all
+    @meals
   end
 
   def find(id)
