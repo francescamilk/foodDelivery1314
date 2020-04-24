@@ -11,7 +11,7 @@ class MealsController
     name = @meals_view.ask_user_for(:name)
     price = @meals_view.ask_user_for(:price).to_i
     meal = Meal.new(name: name, price: price)
-    @meal_repository.add(meal)
+    @meal_repository.create(meal)
     display_meals
   end
 
