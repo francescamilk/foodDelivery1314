@@ -50,9 +50,9 @@ class OrderRepository
 
   def save_to_csv
     CSV.open(@csv_file, "wb") do |csv|
-      csv << %w[id meal_id customer_id employee_id delivered]
+      csv << %w[id delivered meal_id customer_id employee_id]
       @orders.each do |order|
-        csv << [order.id, order.meal.id, order.customer.id, order.employee.id, order.delivered?]
+        csv << [order.id, order.delivered?, order.meal.id, order.customer.id, order.employee.id]
       end
     end
   end
