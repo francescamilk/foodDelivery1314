@@ -4,6 +4,7 @@ begin
   require_relative "../app/repositories/meal_repository"
   require_relative "../app/repositories/customer_repository"
   require_relative "../app/repositories/employee_repository"
+  require_relative "../app/repositories/order_repository"
   require_relative "../app/controllers/orders_controller"
 rescue LoadError => e
   describe "OrdersController" do
