@@ -42,8 +42,7 @@ class OrderRepository
       row[:meal] = @meal_repository.find(row[:meal_id].to_i)
       row[:customer] = @customer_repository.find(row[:customer_id].to_i)
       row[:employee] = @employee_repository.find(row[:employee_id].to_i)
-      order = Order.new(row)
-      @orders << order
+      @orders << Order.new(row)
     end
     @next_id = @orders.last.id + 1 unless @orders.empty?
   end
