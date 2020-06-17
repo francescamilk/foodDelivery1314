@@ -20,7 +20,7 @@ class OrdersController
     customer = select_customer
     employee = select_employee
     order = Order.new(meal: meal, customer: customer, employee: employee)
-    @order_repo.add(order)
+    @order_repo.create(order)
   end
 
   def list_undelivered_orders

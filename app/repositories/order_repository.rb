@@ -12,7 +12,7 @@ class OrderRepository
     load_csv if File.exist?(@csv_file)
   end
 
-  def add(order)
+  def create(order)
     order.id = @next_id
     @orders << order
     @next_id += 1
