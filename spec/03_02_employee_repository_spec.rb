@@ -21,11 +21,7 @@ describe "EmployeeRepository", :employee do
       [ "id", "username", "password", "role" ],
       [ 1, "paul", "secret", "manager" ],
       [ 2, "john", "secret", "delivery_guy" ],
-<<<<<<< HEAD
       [ 3, "ringo", "secret", "delivery_guy"]
-=======
-      [ 3, "ringo", "secret", "delivery_guy" ]
->>>>>>> lecture-day-two
     ]
   end
   let(:csv_path) { "spec/support/employees.csv" }
