@@ -11,5 +11,5 @@ In the current `lecture-day-two` branch, the implemented user actions are:
 - [X] As a manager, I can list all the customers
 - [X] As a manager, I can add a new order
 - [X] As a manager, I can list all the undelivered orders
-- [X] As a delivery guy, I can mark one of my orders as delivered
-- [X] As a delivery guy, I list all my undelivered orders
+- [X] As a rider, I can mark one of my orders as delivered
+- [X] As a rider, I list all my undelivered orders

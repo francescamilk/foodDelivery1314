@@ -50,8 +50,8 @@ describe "Employee", :employee do
 
   describe "#role" do
     it "should return the role of the Employee" do
-      employee = Employee.new({ role: "delivery_guy" })
-      expect(employee.role).to eq("delivery_guy")
+      employee = Employee.new({ role: "rider" })
+      expect(employee.role).to eq("rider")
     end
   end
 
@@ -62,20 +62,20 @@ describe "Employee", :employee do
     end
 
     it "should return false if the employee is a delivery guy" do
-      employee = Employee.new({ role: "delivery_guy" })
+      employee = Employee.new({ role: "rider" })
       expect(employee.manager?).to be false
     end
   end
 
-  describe "#delivery_guy?" do
+  describe "#rider?" do
     it "should return true if the employee is a delivery guy" do
-      employee = Employee.new({ role: "delivery_guy" })
-      expect(employee.delivery_guy?).to be true
+      employee = Employee.new({ role: "rider" })
+      expect(employee.rider?).to be true
     end
 
     it "should return false if the employee is a manager" do
       employee = Employee.new({ role: "manager" })
-      expect(employee.delivery_guy?).to be false
+      expect(employee.rider?).to be false
     end
   end
 end

@@ -57,7 +57,7 @@ class OrdersController
   end
 
   def select_employee
-    employees = @employee_repo.all_delivery_guys
+    employees = @employee_repo.all_riders
     @sessions_view.display(employees)
     index = @orders_view.ask_user_for_index
     return employees[index]
