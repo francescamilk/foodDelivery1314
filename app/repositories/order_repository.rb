@@ -35,8 +35,7 @@ class OrderRepository
   private
 
   def load_csv
-    csv_options = { headers: :first_row, header_converters: :symbol }
-    CSV.foreach(@csv_file, csv_options) do |row|
+    CSV.foreach(@csv_file, headers: :first_row, header_converters: :symbol) do |row|
       row[:id] = row[:id].to_i
       row[:delivered] = row[:delivered] == "true"
       row[:meal] = @meal_repository.find(row[:meal_id].to_i)
