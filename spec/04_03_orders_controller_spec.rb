@@ -83,7 +83,8 @@ describe "OrdersController", :_order do
 
       expect(order_repository.undelivered_orders.length).to eq(4)
       expect(order_repository.undelivered_orders[3].meal.name).to eq("Capricciosa")
-      expect(order_repository.undelivered_orders[3].employee.username).to eq("ringo")
+      # hint: did you only display the riders to the user and ask for the index from that displayed list (not the employee.id)?
+      expect(order_repository.undelivered_orders[3].employee.username).to eq("ringo") 
       expect(order_repository.undelivered_orders[3].customer.name).to eq("John Bonham")
     end
   end
@@ -116,7 +117,7 @@ describe "OrdersController", :_order do
       expect(OrdersController.instance_method(:mark_as_delivered).arity).to eq(1)
     end
 
-    it "should ask the rider for an order index, mark it as delivered, and save the relevant data to the CSV file" do
+    it "should ask the rider for an order index (of their undelivered orders), mark it as delivered, and save the relevant data to the CSV file" do
       controller = OrdersController.new(meal_repository, customer_repository, employee_repository, order_repository)
       # Ringo wants to mark as delivered number 4.
       allow_any_instance_of(Object).to receive(:gets).and_return("1")
@@ -125,6 +126,9 @@ describe "OrdersController", :_order do
       # Reload from CSV
       new_order_repository = OrderRepository.new(orders_csv_path, meal_repository, customer_repository, employee_repository)
       expect(new_order_repository.undelivered_orders.map(&:id)).not_to include(4)
+      # Rewrite the original CSV
+      CsvHelper.write_csv(orders_csv_path, orders)
     end
   end
 end
+
