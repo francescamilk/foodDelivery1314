@@ -36,7 +36,6 @@ describe "Order", :_order do
       order = Order.new(properties)
       expect(order.instance_variable_get(:@employee)).to be_a(Employee)
     end
-
   end
 
   describe "#id" do

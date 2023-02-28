@@ -131,4 +131,3 @@ describe "OrdersController", :_order do
     end
   end
 end
-
