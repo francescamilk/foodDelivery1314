@@ -1,20 +1,20 @@
 class Order
-  attr_accessor :id, :employee
-  attr_reader :meal, :customer, :delivered
+    def initialize(attrs = {})
+        @id        = attrs[:id]          # Integer
+        @delivered = attrs[:delivered] || false
+        @meal      = attrs[:meal]        # Meal
+        @customer  = attrs[:customer]    # Customer
+        @employee  = attrs[:employee]    # Employee
+    end
 
-  def initialize(attributes = {})
-    @id = attributes[:id]
-    @meal = attributes[:meal]
-    @customer = attributes[:customer]
-    @employee = attributes[:employee]
-    @delivered = attributes[:delivered] || false
-  end
+    attr_reader :meal, :customer, :employee
+    attr_accessor :id
 
-  def delivered?
-    @delivered
-  end
+    def delivered?
+        return @delivered
+    end
 
-  def deliver!
-    @delivered = true
-  end
+    def deliver!
+        @delivered = true
+    end
 end

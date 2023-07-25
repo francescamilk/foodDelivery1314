@@ -5,7 +5,7 @@ class OrdersView
     end
   end
 
-  def ask_user_for_index
+  def ask_index
     puts "Index?"
     print "> "
     gets.chomp.to_i - 1

@@ -1,9 +1,9 @@
 class Router
   def initialize(meals_controller, customers_controller, sessions_controller, orders_controller)
-    @meals_controller = meals_controller
+    @meals_controller     = meals_controller
     @customers_controller = customers_controller
-    @sessions_controller = sessions_controller
-    @orders_controller = orders_controller
+    @sessions_controller  = sessions_controller
+    @orders_controller    = orders_controller
     @running = true
   end
 

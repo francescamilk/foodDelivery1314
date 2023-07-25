@@ -1,19 +1,19 @@
 class Employee
-  attr_accessor :id
-  attr_reader :username, :password, :role
+    def initialize(attrs = {})
+        @id = attrs[:id]
+        @username = attrs[:username]
+        @password = attrs[:password]
+        @role = attrs[:role]
+    end
 
-  def initialize(attributes = {})
-    @id = attributes[:id]
-    @username = attributes[:username]
-    @password = attributes[:password]
-    @role = attributes[:role]
-  end
+    attr_reader :username, :password, :role
+    attr_accessor :id
 
-  def manager?
-    @role == "manager"
-  end
+    def manager?
+        return @role == "manager"
+    end
 
-  def rider?
-    @role == "rider"
-  end
+    def rider?
+        return @role == "rider"
+    end
 end

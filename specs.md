@@ -1,9 +1,10 @@
-### Food Delivery challenge solution
+*DATA BRICKS*
+- [X] Employee model
+- [X] Employee repo
+- [X] Order model
+- [X] Order repo
 
-Each branch of the repository represents a snapshot of the codebase during the two-day progression.
-
-In the current `lecture-day-two` branch, the implemented user actions are:
-
+*USER ACTIONS* 
 - [X] As an employee, I can log in
 - [X] As a manager, I can add a new meal
 - [X] As a manager, I can list all the meals
@@ -11,5 +12,6 @@ In the current `lecture-day-two` branch, the implemented user actions are:
 - [X] As a manager, I can list all the customers
 - [X] As a manager, I can add a new order
 - [X] As a manager, I can list all the undelivered orders
-- [X] As a rider, I can mark one of my orders as delivered
+
 - [X] As a rider, I list all my undelivered orders
+- [X] As a rider, I can mark one of my orders as delivered
